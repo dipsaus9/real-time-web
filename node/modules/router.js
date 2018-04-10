@@ -41,6 +41,7 @@ const router = {
 let userObj = [];
 let userNames = [];
 io.on('connection', function(socket){
+  console.log(socket);
   let id = socket.id;
   io.emit('connected', userObj);
   socket.on('log in', function(user){
