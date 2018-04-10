@@ -6,7 +6,7 @@ var routes = [
     location: '/',
     name: 'home',
     baseFile: 'index',
-    data: projects[0]
+    data: ""
   }
 ];
 
