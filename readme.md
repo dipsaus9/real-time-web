@@ -14,4 +14,4 @@ To start the server and this project run:
 
 `npm start`
 
-This will start a server on `localhost:1337`. `nodemone` is being used to watch all files and will copy or compile the script when you save them.
+This will start a server on `localhost:1337`. `nodemon` is being used to watch all files and will copy or compile the script when you save them.
