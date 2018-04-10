@@ -1,0 +1,9 @@
+<% include base/head.ejs %>
+<main>
+<h1>Projects</h1>
+<% for(var i = 0; i < data.length; i++) {%>
+  <h2><%= data[i].name %></h2>
+  <a href="/projects/<%= data[i].url %>">Link</a>
+<% } %>
+</main>
+<% include base/footer.ejs %>

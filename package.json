@@ -1,0 +1,35 @@
+{
+  "name": "real-time-web",
+  "version": "1.0.0",
+  "description": "Pong with sockets",
+  "main": "server.js",
+  "scripts": {
+    "start": "node ./node/server.js",
+    "dev": "concurrently \"npm run serverWatch\" \"npm run  watch-css\" \"npm run browserifyRun\"",
+    "build-css": "node-sass src/scss/app.scss public/css/app.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\"",
+    "browserify": "browserify ./src/js/app.js > public/js/app.js",
+    "browserifyRun": "nodemon --watch ./src/js -x \"npm run browserify\"",
+    "serverWatch": "nodemon --watch ./node -x \"npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dipsaus9/real-time-web.git"
+  },
+  "keywords": [
+    "socket"
+  ],
+  "author": "dipsaus9",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dipsaus9/real-time-web/issues"
+  },
+  "homepage": "https://github.com/dipsaus9/real-time-web#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "nodemon": "^1.17.3"
+  }
+}
