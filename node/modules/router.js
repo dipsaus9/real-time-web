@@ -8,7 +8,6 @@ var routes = [
     location: '/',
     name: 'home',
     baseFile: 'index',
-    data: ""
   }
 ];
 
@@ -23,8 +22,7 @@ const router = {
         });
       }
       else{
-        res.status(404);
-        res.render('404.ejs', {url: req.url});
+        //no result page, creat 404
       }
     }
   },
@@ -40,11 +38,50 @@ const router = {
   },
 };
 
+let userObj = [];
+let userNames = [];
 io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+  let id = socket.id;
+  io.emit('connected', userObj);
+  socket.on('log in', function(user){
+    let double = false;
+    let obj = {
+      id: id,
+      name: user
+    };
+    for(let i =  0; i < userObj.length; i++){
+      if(id === userObj[i].id){
+        let name = userObj[i].name;
+        var index = userNames.indexOf(name);
+        if(index > -1){
+          userNames.splice(index, 1);
+        }
+        userObj[i].name = user;
+        double = true;
+      }
+    }
+    if(!double){
+      userObj.push(obj);
+    }
+    userNames.push(user);
+    io.emit('connected', userObj);
+  });
+  socket.on('disconnect', function(){
+    for(let i =  0; i < userObj.length; i++){
+      if(userObj[i].id === id){
+        let name = userObj[i].name;
+        var index = userNames.indexOf(name);
+        if(index > -1){
+          userNames.splice(index, 1);
+        }
+        userObj.splice(i, 1);
+      }
+    }
+    io.emit('connected', userObj);
   });
 });
+
+
 
 http.listen(1337, function () {
    console.log('server is running on port 1337')
