@@ -2,7 +2,6 @@ const express = require('express')
 const app = express()
 const http = require('http').Server(app);
 const io = require('socket.io').listen(http);
-const session = require('express-session');
 
 http.listen(3004, function () {
    console.log('server is running on port 3004')
@@ -24,7 +23,6 @@ var routes = [
 const router = {
   init: function(){
     router.settings();
-    app.use(session({ secret: 'dipsaus', cookie: { maxAge: 60000 }}));
     for(let i = 0; i < routes.length; i++){
       if(routes[i].baseFile){
         app.get(routes[i].location, function(req, res){
@@ -44,13 +42,6 @@ const router = {
     app.set('view engine', 'ejs');
     //get views from src/views folder
     app.set('views', 'src/views');
-    app.use(session({
-      secret: 'dipsaus',
-      proxy: true,
-      resave: true,
-      saveUninitialized: true
-    }));
-
   },
 };
 
@@ -100,8 +91,5 @@ io.on('connection', function(socket){
     io.emit('buzzer', id);
   });
 });
-
-
-
 
 module.exports = router;
