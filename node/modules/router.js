@@ -1,9 +1,12 @@
 const express = require('express')
 const app = express()
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const io = require('socket.io').listen(http);
 const session = require('express-session');
-const sharedsession = require('express-socket.io-session');
+
+http.listen(3004, function () {
+   console.log('server is running on port 3004')
+});
 
 var routes = [
   {
@@ -53,10 +56,8 @@ const router = {
 
 let userObj = [];
 let userNames = [];
-io.use(sharedsession(session));
 
 io.on('connection', function(socket){
-  console.log(socket.handshake.session);
   let id = socket.id;
   io.emit('connected', userObj);
   socket.on('log in', function(user){
@@ -98,10 +99,6 @@ io.on('connection', function(socket){
 });
 
 
-
-http.listen(3004, function () {
-   console.log('server is running on port 3004')
-});
 
 
 module.exports = router;
