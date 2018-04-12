@@ -96,6 +96,9 @@ io.on('connection', function(socket){
     }
     io.emit('connected', userObj);
   });
+  socket.on('buzzer', function(id){
+    io.emit('buzzer', id);
+  });
 });
 
 
