@@ -1,5 +1,5 @@
 # Nudge with Socket.io
-This project is based on the old nudge from MSN. This project will be based on a `express` server and will be using `sockets.io`. More details on this project later. The purpose from the application is to send a nudge to a person online. You can watch this preojct on [http://wwww.nodejs.dennisspierenburg.nl](www.nodejs.dennisspierenburg.nl).
+This project is based on the old nudge from MSN. This project will be based on a `express` server and will be using `sockets.io`. More details on this project later. The purpose from the application is to send a nudge to a person online. You can watch this preojct on [https://wwww.nodejs.dennisspierenburg.nl](https://www.nodejs.dennisspierenburg.nl).
 
 ## Get started
 To start this project clone this repo.
