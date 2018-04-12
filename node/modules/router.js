@@ -1,19 +1,27 @@
-var express = require('express')
-var app = express()
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+const express = require('express')
+const app = express()
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const session = require('express-session');
+const sharedsession = require('express-socket.io-session');
 
 var routes = [
   {
     location: '/',
     name: 'home',
     baseFile: 'index',
-  }
+  },
+  {
+    location: '/test',
+    name: 'home',
+    baseFile: 'index',
+  },
 ];
 
 const router = {
   init: function(){
     router.settings();
+    app.use(session({ secret: 'dipsaus', cookie: { maxAge: 60000 }}));
     for(let i = 0; i < routes.length; i++){
       if(routes[i].baseFile){
         app.get(routes[i].location, function(req, res){
@@ -29,19 +37,26 @@ const router = {
   settings: function(){
     //use static files served from public folder
     app.use(express.static('public'))
-
     //user view engine ejs
     app.set('view engine', 'ejs');
     //get views from src/views folder
     app.set('views', 'src/views');
+    app.use(session({
+      secret: 'dipsaus',
+      proxy: true,
+      resave: true,
+      saveUninitialized: true
+    }));
 
   },
 };
 
 let userObj = [];
 let userNames = [];
+io.use(sharedsession(session));
+
 io.on('connection', function(socket){
-  console.log(socket);
+  console.log(socket.handshake.session);
   let id = socket.id;
   io.emit('connected', userObj);
   socket.on('log in', function(user){
@@ -84,8 +99,8 @@ io.on('connection', function(socket){
 
 
 
-http.listen(1337, function () {
-   console.log('server is running on port 1337')
+http.listen(3004, function () {
+   console.log('server is running on port 3004')
 });
 
 
